@@ -11,24 +11,26 @@ export function Index() {
   const [showOrderConfirmation, setShowOrderConfirmation] = useState(false);
 
   useEffect(() => {
-    import('@/data/data.json').then((data) => {
+    import("@/data/data.json").then((data) => {
       setDesserts(data.default);
     });
   }, []);
 
   const handleAddToCart = (dessert: Dessert) => {
-    const existingItem = cartItems.find(item => item.name === dessert.name);
-    
+    const existingItem = cartItems.find((item) => item.name === dessert.name);
+
     if (existingItem) {
-      setCartItems(cartItems.map(item =>
-        item.name === dessert.name
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      ));
+      setCartItems(
+        cartItems.map((item) =>
+          item.name === dessert.name
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        ),
+      );
     } else {
       setCartItems([...cartItems, { ...dessert, quantity: 1 }]);
     }
-    
+
     toast("Added to cart", {
       description: `${dessert.name} has been added to your cart.`,
     });
@@ -36,21 +38,21 @@ export function Index() {
 
   const handleUpdateQuantity = (dessert: Dessert, quantity: number) => {
     if (quantity === 0) {
-      setCartItems(cartItems.filter(item => item.name !== dessert.name));
+      setCartItems(cartItems.filter((item) => item.name !== dessert.name));
       toast("Removed from cart", {
         description: `${dessert.name} has been removed from your cart.`,
       });
     } else {
-      setCartItems(cartItems.map(item =>
-        item.name === dessert.name
-          ? { ...item, quantity }
-          : item
-      ));
+      setCartItems(
+        cartItems.map((item) =>
+          item.name === dessert.name ? { ...item, quantity } : item,
+        ),
+      );
     }
   };
 
   const getItemQuantity = (dessert: Dessert): number => {
-    const item = cartItems.find(item => item.name === dessert.name);
+    const item = cartItems.find((item) => item.name === dessert.name);
     return item ? item.quantity : 0;
   };
 
@@ -75,8 +77,10 @@ export function Index() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content */}
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-foreground mb-8">Desserts</h1>
-            
+            <h1 className="text-3xl font-bold text-foreground mb-8">
+              Desserts
+            </h1>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {desserts.map((dessert) => (
                 <DessertCard
@@ -109,5 +113,5 @@ export function Index() {
         onStartNewOrder={handleStartNewOrder}
       />
     </div>
-  )
+  );
 }

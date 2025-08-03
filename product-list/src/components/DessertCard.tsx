@@ -12,11 +12,11 @@ interface DessertCardProps {
   currentQuantity: number;
 }
 
-export const DessertCard = ({ 
-  dessert, 
-  onAddToCart, 
-  onUpdateQuantity, 
-  currentQuantity 
+export const DessertCard = ({
+  dessert,
+  onAddToCart,
+  onUpdateQuantity,
+  currentQuantity,
 }: DessertCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -32,10 +32,15 @@ export const DessertCard = ({
   };
 
   const imageUrl = getImageUrl(dessert.image.desktop);
-  console.log('DessertCard - Image path:', dessert.image.desktop, 'Resolved URL:', imageUrl);
+  console.log(
+    "DessertCard - Image path:",
+    dessert.image.desktop,
+    "Resolved URL:",
+    imageUrl,
+  );
 
   return (
-    <Card 
+    <Card
       className="group relative overflow-hidden border-0 bg-card shadow-sm hover:shadow-elegant transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -45,15 +50,20 @@ export const DessertCard = ({
           src={imageUrl}
           alt={dessert.name}
           className={`w-full h-48 sm:h-52 object-cover rounded-lg transition-all duration-300 ${
-            currentQuantity > 0 ? 'ring-2 ring-dessert-orange' : ''
-          } ${isHovered ? 'scale-105' : ''}`}
+            currentQuantity > 0 ? "ring-2 ring-dessert-orange" : ""
+          } ${isHovered ? "scale-105" : ""}`}
           onError={(e) => {
-            console.error('Failed to load image:', dessert.image.desktop, 'URL:', imageUrl);
+            console.error(
+              "Failed to load image:",
+              dessert.image.desktop,
+              "URL:",
+              imageUrl,
+            );
             // Fallback to a placeholder or hide the image
-            e.currentTarget.style.display = 'none';
+            e.currentTarget.style.display = "none";
           }}
         />
-        
+
         {currentQuantity === 0 ? (
           <Button
             onClick={handleAddToCart}
@@ -73,7 +83,9 @@ export const DessertCard = ({
             >
               <Minus className="w-3 h-3" />
             </Button>
-            <span className="font-semibold text-sm min-w-[2ch] text-center">{currentQuantity}</span>
+            <span className="font-semibold text-sm min-w-[2ch] text-center">
+              {currentQuantity}
+            </span>
             <Button
               onClick={() => handleQuantityChange(1)}
               variant="ghost"
@@ -88,8 +100,12 @@ export const DessertCard = ({
 
       <div className="p-4 pt-8">
         <p className="text-sm text-muted-foreground mb-1">{dessert.category}</p>
-        <h3 className="font-semibold text-foreground mb-2 line-clamp-2">{dessert.name}</h3>
-        <p className="text-lg font-bold text-dessert-orange">${dessert.price.toFixed(2)}</p>
+        <h3 className="font-semibold text-foreground mb-2 line-clamp-2">
+          {dessert.name}
+        </h3>
+        <p className="text-lg font-bold text-dessert-orange">
+          ${dessert.price.toFixed(2)}
+        </p>
       </div>
     </Card>
   );

@@ -39,7 +39,7 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  
+
   /* Custom dessert colors */
   --color-dessert-orange: var(--dessert-orange);
   --color-dessert-orange-hover: var(--dessert-orange-hover);
@@ -81,7 +81,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  
+
   /* Custom dessert colors in OKLCH */
   --dessert-orange: oklch(0.68 0.15 45);
   --dessert-orange-hover: oklch(0.58 0.15 45);
@@ -122,7 +122,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  
+
   /* Dark theme versions of custom colors */
   --dessert-orange: oklch(0.72 0.15 45);
   --dessert-orange-hover: oklch(0.62 0.15 45);
