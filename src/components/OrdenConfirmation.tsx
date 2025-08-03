@@ -2,6 +2,7 @@ import type { CartItem } from "@/types/dessert";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { Check } from "lucide-react";
 import { Button } from "./ui/button";
+import { getImageUrl } from "@/lib/imageUtils";
 
 interface OrderConfirmationProps {
   isOpen: boolean;
@@ -37,20 +38,12 @@ export const OrderConfirmation = ({
         <div className="space-y-4 mb-6">
           {items.map((item) => {
             // Use the same approach as Cart component
-            const imageSrc = item.image.thumbnail.replace("../", "/src/");
-            console.log(
-              "OrderConfirmation - Item:",
-              item.name,
-              "Original path:",
-              item.image.thumbnail,
-              "Modified path:",
-              imageSrc,
-            );
+            const imageUrl = getImageUrl(item.image.desktop);
 
             return (
               <div key={item.name} className="flex items-center gap-3 py-2">
                 <img
-                  src={imageSrc}
+                  src={imageUrl}
                   alt={item.name}
                   className="w-12 h-12 rounded-lg object-cover"
                   onError={() => {
@@ -58,7 +51,7 @@ export const OrderConfirmation = ({
                       "OrderConfirmation - Failed to load image for:",
                       item.name,
                       "Path:",
-                      imageSrc,
+                      imageUrl,
                     );
                   }}
                   onLoad={() => {
@@ -66,7 +59,7 @@ export const OrderConfirmation = ({
                       "OrderConfirmation - Successfully loaded image for:",
                       item.name,
                       "Path:",
-                      imageSrc,
+                      imageUrl,
                     );
                   }}
                 />

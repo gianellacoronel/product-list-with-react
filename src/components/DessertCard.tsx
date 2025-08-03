@@ -32,12 +32,6 @@ export const DessertCard = ({
   };
 
   const imageUrl = getImageUrl(dessert.image.desktop);
-  console.log(
-    "DessertCard - Image path:",
-    dessert.image.desktop,
-    "Resolved URL:",
-    imageUrl,
-  );
 
   return (
     <Card

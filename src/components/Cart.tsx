@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getImageUrl } from "@/lib/imageUtils";
 import type { CartItem } from "@/types/dessert";
 
 import { X } from "lucide-react";
@@ -53,23 +54,14 @@ export const Cart = ({
       <div className="space-y-4 mb-6">
         {items.map((item) => {
           // Fix the path replacement to match the actual data paths
-          const imageSrc = item.image.thumbnail.replace("../", "/src/");
-          console.log(
-            "Cart - Item:",
-            item.name,
-            "Original path:",
-            item.image.thumbnail,
-            "Modified path:",
-            imageSrc,
-          );
-
+          const imageUrl = getImageUrl(item.image.desktop);
           return (
             <div
               key={item.name}
               className="flex items-center gap-3 py-3 border-b border-border last:border-b-0"
             >
               <img
-                src={imageSrc}
+                src={imageUrl}
                 alt={item.name}
                 className="w-12 h-12 rounded-lg object-cover"
                 onError={() => {
@@ -77,7 +69,7 @@ export const Cart = ({
                     "Cart - Failed to load image for:",
                     item.name,
                     "Path:",
-                    imageSrc,
+                    imageUrl,
                   );
                 }}
                 onLoad={() => {
@@ -85,7 +77,7 @@ export const Cart = ({
                     "Cart - Successfully loaded image for:",
                     item.name,
                     "Path:",
-                    imageSrc,
+                    imageUrl,
                   );
                 }}
               />

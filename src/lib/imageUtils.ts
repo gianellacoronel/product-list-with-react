@@ -97,17 +97,6 @@ export function getImageUrl(imagePath: string): string {
   const filename = imagePath.split("/").pop();
   if (!filename) return imagePath;
 
-  console.log(
-    "getImageUrl - Input path:",
-    imagePath,
-    "Extracted filename:",
-    filename,
-  );
-  console.log("getImageUrl - Available keys:", Object.keys(imageMap));
-  console.log("getImageUrl - Found in map:", imageMap[filename]);
-
-  // Return the mapped URL or fallback to the original path
   const result = imageMap[filename] || imagePath;
-  console.log("getImageUrl - Final result:", result);
   return result;
 }
