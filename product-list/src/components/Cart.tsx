@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { CartItem } from "@/types/dessert";
 
-import { X, Leaf } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface CartProps {
   items: CartItem[];
@@ -39,7 +39,9 @@ export const Cart = ({ items, onUpdateQuantity, onConfirmOrder }: CartProps) => 
       
       <div className="space-y-4 mb-6">
         {items.map((item) => {
-          const imageSrc = item.image.thumbnail.replace('./', '/');
+          // Fix the path replacement to match the actual data paths
+          const imageSrc = item.image.thumbnail.replace('../', '/src/');
+          console.log('Cart - Item:', item.name, 'Original path:', item.image.thumbnail, 'Modified path:', imageSrc);
           
           return (
             <div key={item.name} className="flex items-center gap-3 py-3 border-b border-border last:border-b-0">
@@ -47,6 +49,12 @@ export const Cart = ({ items, onUpdateQuantity, onConfirmOrder }: CartProps) => 
                 src={imageSrc}
                 alt={item.name}
                 className="w-12 h-12 rounded-lg object-cover"
+                onError={() => {
+                  console.error('Cart - Failed to load image for:', item.name, 'Path:', imageSrc);
+                }}
+                onLoad={() => {
+                  console.log('Cart - Successfully loaded image for:', item.name, 'Path:', imageSrc);
+                }}
               />
               <div className="flex-1">
                 <h4 className="font-medium text-sm text-foreground">{item.name}</h4>
