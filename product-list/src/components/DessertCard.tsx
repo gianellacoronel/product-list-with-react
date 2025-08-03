@@ -3,25 +3,22 @@ import { useState } from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { getImageUrl } from "@/lib/imageUtils";
 
 interface DessertCardProps {
   dessert: Dessert;
   onAddToCart: (dessert: Dessert) => void;
   onUpdateQuantity: (dessert: Dessert, quantity: number) => void;
   currentQuantity: number;
-  imageMap: Record<string, string>;
 }
 
 export const DessertCard = ({ 
   dessert, 
   onAddToCart, 
   onUpdateQuantity, 
-  currentQuantity, 
-  imageMap 
+  currentQuantity 
 }: DessertCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  
-  const imageSrc = imageMap[dessert.name] || dessert.image.desktop;
 
   const handleAddToCart = () => {
     onAddToCart(dessert);
@@ -34,6 +31,9 @@ export const DessertCard = ({
     }
   };
 
+  const imageUrl = getImageUrl(dessert.image.desktop);
+  console.log('DessertCard - Image path:', dessert.image.desktop, 'Resolved URL:', imageUrl);
+
   return (
     <Card 
       className="group relative overflow-hidden border-0 bg-card shadow-sm hover:shadow-elegant transition-all duration-300"
@@ -42,11 +42,16 @@ export const DessertCard = ({
     >
       <div className="relative">
         <img
-          src={imageSrc}
+          src={imageUrl}
           alt={dessert.name}
           className={`w-full h-48 sm:h-52 object-cover rounded-lg transition-all duration-300 ${
             currentQuantity > 0 ? 'ring-2 ring-dessert-orange' : ''
           } ${isHovered ? 'scale-105' : ''}`}
+          onError={(e) => {
+            console.error('Failed to load image:', dessert.image.desktop, 'URL:', imageUrl);
+            // Fallback to a placeholder or hide the image
+            e.currentTarget.style.display = 'none';
+          }}
         />
         
         {currentQuantity === 0 ? (

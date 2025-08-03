@@ -8,10 +8,9 @@ interface CartProps {
   items: CartItem[];
   onUpdateQuantity: (item: CartItem, quantity: number) => void;
   onConfirmOrder: () => void;
-  imageMap: Record<string, string>;
 }
 
-export const Cart = ({ items, onUpdateQuantity, onConfirmOrder, imageMap }: CartProps) => {
+export const Cart = ({ items, onUpdateQuantity, onConfirmOrder }: CartProps) => {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -40,7 +39,7 @@ export const Cart = ({ items, onUpdateQuantity, onConfirmOrder, imageMap }: Cart
       
       <div className="space-y-4 mb-6">
         {items.map((item) => {
-          const imageSrc = imageMap[item.name] || item.image.thumbnail;
+          const imageSrc = item.image.thumbnail.replace('./', '/');
           
           return (
             <div key={item.name} className="flex items-center gap-3 py-3 border-b border-border last:border-b-0">
@@ -81,11 +80,6 @@ export const Cart = ({ items, onUpdateQuantity, onConfirmOrder, imageMap }: Cart
           <span className="text-foreground">Order Total</span>
           <span className="text-foreground">${totalPrice.toFixed(2)}</span>
         </div>
-      </div>
-
-      <div className="flex items-center gap-2 mb-6 p-3 bg-secondary rounded-lg">
-        <Leaf className="w-4 h-4 text-dessert-green" />
-        <span className="text-sm text-foreground">This is a <strong>carbon-neutral</strong> delivery</span>
       </div>
 
       <Button 

@@ -8,15 +8,13 @@ interface OrderConfirmationProps {
   onClose: () => void;
   items: CartItem[];
   onStartNewOrder: () => void;
-  imageMap: Record<string, string>;
 }
 
 export const OrderConfirmation = ({ 
   isOpen, 
   onClose, 
   items, 
-  onStartNewOrder,
-  imageMap 
+  onStartNewOrder 
 }: OrderConfirmationProps) => {
   const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -33,7 +31,9 @@ export const OrderConfirmation = ({
 
         <div className="space-y-4 mb-6">
           {items.map((item) => {
-            const imageSrc = imageMap[item.name] || item.image.thumbnail;
+            // Use the same approach as Cart component
+            const imageSrc = item.image.thumbnail.replace('../', '/src/');
+            console.log('OrderConfirmation - Item:', item.name, 'Original path:', item.image.thumbnail, 'Modified path:', imageSrc);
             
             return (
               <div key={item.name} className="flex items-center gap-3 py-2">
@@ -41,6 +41,12 @@ export const OrderConfirmation = ({
                   src={imageSrc}
                   alt={item.name}
                   className="w-12 h-12 rounded-lg object-cover"
+                  onError={() => {
+                    console.error('OrderConfirmation - Failed to load image for:', item.name, 'Path:', imageSrc);
+                  }}
+                  onLoad={() => {
+                    console.log('OrderConfirmation - Successfully loaded image for:', item.name, 'Path:', imageSrc);
+                  }}
                 />
                 <div className="flex-1">
                   <h4 className="font-medium text-sm text-foreground">{item.name}</h4>
